@@ -1,0 +1,33 @@
+Prompt para Desenvolvimento de Sistema de Controle de Gastos e Estoque
+
+
+Objetivo: Desenvolver um sistema de controle de gastos e estoque utilizando Java Spring Boot no backend e HTML com Tailwind no frontend. O sistema deve incluir funcionalidades de login e senha, cadastro de gastos mensais, cadastro de estoque e registro de vendas diárias.
+Requisitos do Sistema:
+
+        1. Backend:
+        Utilizar Java Spring Boot.
+        Implementar autenticação com sistema de login e senha.
+        Criar endpoints para:
+        Cadastro de gastos mensais, incluindo valor e data.
+        Cadastro de estoque, incluindo detalhes do produto e data de entrada.
+        Registro de vendas diárias, incluindo valor total e data.
+
+
+        2. Frontend:
+        Utilizar HTML com Tailwind para estilização.
+        Criar uma interface simples e intuitiva para interação do usuário.
+        Formulários para cadastro de gastos, estoque e vendas.
+
+
+        3.Banco de Dados:
+            Utilizar PostgreSQL.
+            Estruturar tabelas para armazenar informações de usuários, gastos, estoque e vendas.
+            Garantir que todos os registros incluam a data para futuras consultas e relatórios.
+
+        4.Funcionalidades Adicionais:
+            Relatórios organizados por data para análise de gastos, estoque e vendas.
+            Interface de usuário para visualização e filtragem de dados por data.
+            Considerações:
+            O sistema deve ser escalável e seguro.
+            Focar na simplicidade e eficiência do frontend.
+            Garantir que o backend seja robusto e bem documentado.

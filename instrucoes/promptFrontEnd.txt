@@ -1,0 +1,27 @@
+1 #vamos usar o vue.js para criar o front end
+2 #vamos usar o axios para fazer as requisições
+3 #vamos usar o tailwind para o estilo
+4 #vamos usar o vite para criar o projeto
+5 #vamos usar o vue router para a navegação
+6 #vamos usar o vuex para o gerenciamento de estado
+7 #vamos usar o vue cli para criar o projeto
+8 #vamos usar o vue router para a navegação
+9 #as cores do sistema são:
+-#azul: #007bff
+-#verde: #28a745
+-#vermelho: #A52A2A
+-#branco: #FFFFFF
+
+10 #as fontes do sistema são:
+-#font-family: 'Roboto', sans-serif;
+-#font-size: 16px;
+-#font-weight: 400;
+-#line-height: 1.5;
+-#letter-spacing: 0.009em;
+
+11 #a base do sistema é: vermelho e branco
+
+
+12 #exemplo de como deve ser a estrutura do projeto: @/instrucoes/interfacedashboard.jpg
+
+13 #vue instalado para codificar em JS
