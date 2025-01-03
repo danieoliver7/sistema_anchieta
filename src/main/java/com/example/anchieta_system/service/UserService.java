@@ -13,12 +13,13 @@ import com.example.anchieta_system.repository.UserRepository;
 @Service
 public class UserService {
 
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserRepository userRepository;
 
     public User createUser(User user) {
+        logger.info("Creating user with email: {}", user.getEmail());
         return userRepository.save(user);
     }
 
@@ -59,4 +60,28 @@ public class UserService {
 
         userRepository.delete(user);
     }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    }
+
+    /**
+     * Retorna o usuário atualmente logado.
+     *
+     * @return Usuário logado ou null se nenhum usuário estiver logado.
+     */
+    public User getLoggedUser() {
+        // Implementação para obter o usuário logado
+        // Isso pode variar dependendo de como a autenticação está configurada
+        // Exemplo:
+        // return userRepository.findLoggedUser();
+        return null; // Substitua por lógica real
+    }
+
 }

@@ -3,7 +3,7 @@
     <div class="bg-white p-8 rounded-xl shadow-sm w-full max-w-[400px] mx-4">
       <!-- Logo/Título -->
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-semibold text-gray-800">Resenha's Anchieta</h1>
+        <h1 class="text-3xl font-semibold text-gray-800">Resenha Bar Anchieta</h1>
       </div>
 
       <!-- Formulário -->

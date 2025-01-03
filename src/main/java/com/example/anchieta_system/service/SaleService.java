@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.anchieta_system.Entity.Sale;
 import com.example.anchieta_system.repository.SaleRepository;
+import java.math.BigDecimal;
 
 @Service
 public class SaleService {
@@ -18,5 +19,9 @@ public class SaleService {
     
     public List<Sale> getAllSales() {
         return saleRepository.findAll();
+    }
+    
+    public BigDecimal getTotalSales() {
+        return saleRepository.calculateTotalSales();
     }
 } 

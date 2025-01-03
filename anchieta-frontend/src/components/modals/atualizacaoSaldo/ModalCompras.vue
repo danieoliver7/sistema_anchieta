@@ -62,7 +62,8 @@
 </template>
 
 <script>
-import api from '../services/api'
+import api from '../../../services/api'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'ModalCompras',
@@ -78,7 +79,9 @@ export default {
         descricao: '',
         valor: '',
         data: new Date().toISOString().substr(0, 10)
-      }
+      },
+      loading: false,
+      error: null
     }
   },
   methods: {
@@ -87,18 +90,34 @@ export default {
       this.limparFormulario()
     },
     async salvarCompra() {
+      this.loading = true
+      this.error = null
+      
       try {
-        const response = await api.post('/compras', {
-          descricao: this.compra.descricao,
-          valor: this.compra.valor,
-          data: new Date().toISOString()
+        const userEmail = Cookies.get('user')
+        const dataHoraAtual = new Date();
+        
+        console.log('Descrição:', this.compra.descricao);
+        
+        const response = await api.post('/api/expenses', {
+          description: this.compra.descricao,
+          amount: this.compra.valor,
+          date: dataHoraAtual.toISOString().substr(0, 10)
+        }, 
+        {
+          headers: {
+            'user': userEmail
+          }
         })
         
-        console.log('Compra salva:', response.data)
+        console.log('Despesa registrada:', response.data)
         this.$emit('compra-salva', response.data)
         this.fecharModal()
       } catch (error) {
-        alert('Erro ao salvar compra: ' + (error.response?.data?.message || 'Erro desconhecido'))
+        this.error = error.response?.data || 'Erro ao registrar despesa'
+        alert(this.error)
+      } finally {
+        this.loading = false
       }
     },
     limparFormulario() {
@@ -107,6 +126,7 @@ export default {
         valor: '',
         data: new Date().toISOString().substr(0, 10)
       }
+      this.error = null
     }
   }
 }

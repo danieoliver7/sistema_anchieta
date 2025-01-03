@@ -1,51 +1,52 @@
 package com.example.anchieta_system.Entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import lombok.Data;
+import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
 @Entity
-@Data
 public class Sale {
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    private String descricao;
+    private LocalDateTime data;
     @Column(nullable = false)
-    private BigDecimal totalValue;
-    
-    @Column(nullable = false)
-    private LocalDate date;
+    private BigDecimal amount;
 
-public Long getId() {
-    return id;
-}
+    // Getters e Setters
 
-public void setId(Long id) {
-    this.id = id;
-}
+    public String getDescricao() {
+        return descricao;
+    }
 
-public BigDecimal getTotalValue() {
-    return totalValue;
-}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-public void setTotalValue(BigDecimal totalValue) {
-    this.totalValue = totalValue;
-}
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
-public LocalDate getDate() {
-    return date;
-}
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 
-public void setDate(LocalDate date) {
-    this.date = date;
-}
-    
+    public LocalDateTime getData() {
+        return data;
+    }
+
+    public void setData(LocalDateTime data) {
+        this.data = data;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
 

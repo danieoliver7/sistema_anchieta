@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import com.example.anchieta_system.Entity.User;
 import com.example.anchieta_system.service.UserService;
@@ -101,13 +102,13 @@ public class UserController {
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
         try {
+            System.out.println("Dados recebidos: " + user);
             User updatedUser = userService.updateUser(id, user);
             return ResponseEntity.ok(updatedUser);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     /**
      * Exclui um usuário com base no ID fornecido.
      *
@@ -121,6 +122,63 @@ public class UserController {
             return ResponseEntity.ok("Usuário excluído com sucesso");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    
+
+    /**
+     * Retorna o perfil de um usuário com base no email fornecido.
+     *
+     * @param userEmail Email do usuário a ser buscado.
+     * @return ResponseEntity com o perfil do usuário ou mensagem de erro.
+     */
+    @GetMapping("/users/profile")
+    public ResponseEntity<?> getUserProfile(@RequestHeader("user") String userEmail) {
+        try {
+            User user = userService.findByEmail(userEmail);
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
+     * Retorna o nome de um usuário com base no ID fornecido.
+     *
+     * @param id ID do usuário a ser buscado.
+     * @return ResponseEntity com o nome do usuário ou mensagem de erro.
+     */
+    @GetMapping("/users/{id}/name")
+    public ResponseEntity<String> getUserNameById(@PathVariable Long id) {
+        try {
+            User user = userService.findById(id);
+            if (user != null) {
+                return ResponseEntity.ok(user.getName());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao buscar nome do usuário");
+        }
+    }
+
+    /**
+     * Retorna o nome de um usuário logado.
+     *
+     * @return ResponseEntity com o nome do usuário logado ou mensagem de erro.
+     */
+    @GetMapping("/users/profile/name")
+    public ResponseEntity<String> getLoggedUserName() {
+        try {
+            User user = userService.getLoggedUser();
+            if (user != null) {
+                return ResponseEntity.ok(user.getName());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao buscar nome do usuário");
         }
     }
 }

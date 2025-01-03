@@ -1,10 +1,7 @@
 <template>
   <div class="p-6">
     <!-- Cabeçalho -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-semibold">Hello, Daniel</h1>
-     
-    </div>
+
 
     <!-- Cards de Métricas -->
     <div class="grid grid-cols-4 gap-6 mb-8">
@@ -17,7 +14,7 @@
             </svg>
           </div>
         </div>
-        <h2 class="text-2xl font-bold">R$1,250</h2>
+        <h2 class="text-2xl font-bold">R${{ totalGastos30Dias.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</h2>
       </div>
       <div class="bg-white p-6 rounded-xl shadow-sm">
         <div class="flex items-center justify-between mb-2">
@@ -28,7 +25,7 @@
             </svg>
           </div>
         </div>
-        <h2 class="text-2xl font-bold">R$ 1505,58 </h2>
+        <h2 class="text-2xl font-bold">R${{ totalVendas.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</h2>
       </div>
       <div class="bg-white p-6 rounded-xl shadow-sm">
         <div class="flex items-center justify-between mb-2">
@@ -39,7 +36,7 @@
             </svg>
           </div>
         </div>
-        <h2 class="text-2xl font-bold">R$ 3500</h2>
+        <h2 class="text-2xl font-bold">{{ formattedBalance }}</h2>
       </div>
       <div class="bg-white p-6 rounded-xl shadow-sm">
         <div class="flex items-center justify-between mb-2">
@@ -63,7 +60,7 @@
           <div class="flex justify-between items-center mb-6">
             <div>
               <h3 class="text-xl font-semibold">Performance</h3>
-              <p class="text-gray-500">1,046 Inbound Calls today</p>
+              <p class="text-gray-500"></p>
             </div>
             
             <div class="flex items-center gap-4">
@@ -169,8 +166,10 @@
 </template>
 
 <script>
-import ModalVendas from '../components/ModalVendas.vue'
-import ModalCompras from '../components/ModalCompras.vue'
+import ModalVendas from '../components/modals/atualizacaoSaldo/ModalVendas.vue'
+import ModalCompras from '../components/modals/atualizacaoSaldo/ModalCompras.vue'
+import api from '../services/api'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'Dashboard',
@@ -180,6 +179,7 @@ export default {
   },
   data() {
     return {
+      totalGastos30Dias: 0,
       isCalendarOpen: false,
       selectedDate: '30 Dec 2024',
       dateOptions: [
@@ -254,7 +254,24 @@ export default {
         }
       ],
       modalVendasAberto: false,
-      modalComprasAberto: false
+      modalComprasAberto: false,
+      balance: null,
+      user: null,
+      userName: 'Visitante',
+      totalGastos30Dias: 0,
+      totalVendas: 0,
+    }
+  },
+  computed: {
+    formattedBalance() {
+      if (!this.balance) return 'R$ 0,00'
+      return `R$ ${Number(this.balance.amount).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`
+    },
+    formattedName() {
+      return this.user?.email || 'Visitante'
     }
   },
   methods: {
@@ -276,14 +293,72 @@ export default {
     },
     fecharModalCompras() {
       this.modalComprasAberto = false
+    },
+    async fetchBalance() {
+      try {
+        const response = await api.get('/api/balance')
+        this.balance = response.data
+      } catch (error) {
+        console.error('Erro ao buscar saldo:', error)
+      }
+    },
+    async fetchUser() {
+      try {
+        const userEmail = Cookies.get('user');
+        const response = await api.get('/auth/users/profile', {
+          headers: { user: userEmail }
+        });
+        this.user = response.data;
+      } catch (error) {
+        console.error('Erro ao buscar usuário:', error);
+      }
+    },
+    fetchUserName() {
+      const userId = this.user?.id;
+      if (userId) {
+        api.get(`/auth/users/${userId}/name`)
+          .then(response => {
+            this.userName = response.data;
+          })
+          .catch(error => {
+            console.error('Erro ao buscar nome do usuário:', error);
+            alert('Erro ao buscar nome do usuário');
+          });
+      }
+    },
+    async fetchGastos30Dias() {
+        try {
+            const response = await api.get('/api/expenses/last30days');
+            this.totalGastos30Dias = response.data;
+        } catch (error) {
+            console.error('Erro ao buscar gastos:', error);
+        }
+    },
+    async fetchTotalVendas() {
+        try {
+            const response = await api.get('/api/sales/total');
+            this.totalVendas = response.data;
+        } catch (error) {
+            console.error('Erro ao buscar total de vendas:', error);
+        }
     }
   },
   mounted() {
+    this.fetchGastos30Dias();
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.relative')) {
         this.isCalendarOpen = false
       }
     })
+    this.fetchUser()
+    this.fetchBalance()
+    this.fetchUserName(); 
+    const userId = this.user?.id;
+    if (userId) {
+      this.fetchUserName(userId);
+    }
+    this.fetchGastos30Dias();
+    this.fetchTotalVendas();
   }
 }
 </script> 

@@ -60,7 +60,8 @@
 </template>
 
 <script>
-import api from '../services/api'
+import api from '../../../services/api'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'ModalVendas',
@@ -76,7 +77,9 @@ export default {
         descricao: '',
         valor: '',
         data: new Date().toISOString().substr(0, 10)
-      }
+      },
+      loading: false,
+      error: null
     }
   },
   methods: {
@@ -85,18 +88,31 @@ export default {
       this.limparFormulario()
     },
     async salvarVenda() {
+      this.loading = true
+      this.error = null
+      
       try {
-        const response = await api.post('/vendas', {
+        const userEmail = Cookies.get('user')
+        const dataHoraAtual = new Date();
+        
+        const response = await api.post('/api/sales', {
           descricao: this.venda.descricao,
-          valor: this.venda.valor,
-          data: new Date().toISOString()
+          amount: this.venda.valor,
+          data: dataHoraAtual.toISOString()
+        }, {
+          headers: {
+            'user': userEmail
+          }
         })
         
-        console.log('Venda salva:', response.data)
+        console.log('Venda registrada:', response.data)
         this.$emit('venda-salva', response.data)
         this.fecharModal()
       } catch (error) {
-        alert('Erro ao salvar venda: ' + (error.response?.data?.message || 'Erro desconhecido'))
+        this.error = error.response?.data || 'Erro ao registrar venda'
+        alert(this.error)
+      } finally {
+        this.loading = false
       }
     },
     limparFormulario() {
@@ -105,6 +121,7 @@ export default {
         valor: '',
         data: new Date().toISOString().substr(0, 10)
       }
+      this.error = null
     }
   }
 }

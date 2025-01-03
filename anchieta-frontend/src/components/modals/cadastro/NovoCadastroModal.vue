@@ -32,7 +32,7 @@
               </label>
               <label class="inline-flex items-center ml-4">
                 <input type="radio" v-model="userType" value="2" class="form-radio" />
-                <span class="ml-2">Garçom</span>
+                <span class="ml-2">Usuário</span>
               </label>
             </div>
           </div>
