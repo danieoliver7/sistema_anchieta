@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.*;
 import com.example.anchieta_system.Entity.Stock;
 import com.example.anchieta_system.service.StockService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Controlador responsável por operações relacionadas a estoque.
  */
+@Slf4j
 @RestController
-@RequestMapping("/api/stocks")
+@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/auth/stocks")
 public class StockController {
 
     @Autowired

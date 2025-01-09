@@ -7,21 +7,28 @@
     <div class="grid grid-cols-4 gap-6 mb-8">
       <div class="bg-white p-6 rounded-xl shadow-sm">
         <div class="flex items-center justify-between mb-2">
-          <p class="text-gray-500">Gastos</p>
-          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2"/>
-            </svg>
+          <p class="text-gray-500">investidos no mês</p>
+          <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+          </svg>
           </div>
         </div>
         <h2 class="text-2xl font-bold">R${{ totalGastos30Dias.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</h2>
       </div>
       <div class="bg-white p-6 rounded-xl shadow-sm">
         <div class="flex items-center justify-between mb-2">
-          <p class="text-gray-500">Lucros</p>
-          <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M12 8v4l3 3"/>
+          <p class="text-gray-500">Vendas do mês</p>
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              
+
+              <svg  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+              </svg>
+
+             
             </svg>
           </div>
         </div>
@@ -30,7 +37,7 @@
       <div class="bg-white p-6 rounded-xl shadow-sm">
         <div class="flex items-center justify-between mb-2">
           <p class="text-gray-500">Saldo em conta</p>
-          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+          <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
             <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
@@ -41,9 +48,13 @@
       <div class="bg-white p-6 rounded-xl shadow-sm">
         <div class="flex items-center justify-between mb-2">
           <p class="text-gray-500">Meta do mês</p>
-          <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+          <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-black-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"/>
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="" />
+</svg>
+
             </svg>
           </div>
         </div>

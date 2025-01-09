@@ -54,18 +54,21 @@
     <!-- Modais -->
     <NovoCadastroModal v-if="showNovoCadastroModal" @close="showNovoCadastroModal = false" />
     <ListarUsuariosModal v-if="showListarUsuariosModal" @close="showListarUsuariosModal = false" />
+    <CadastroProdutoModal v-if="showCadastroProdutoModal" @close="showCadastroProdutoModal = false" />
   </div>
 </template>
 
 <script>
 import NovoCadastroModal from './components/modals/cadastro/NovoCadastroModal.vue';
 import ListarUsuariosModal from './components/modals/cadastro/ListarUsuariosModal.vue';
+import CadastroProdutoModal from './components/modals/cadastro_produtos/CadastroProdutoModal.vue';
 
 export default {
   name: 'App',
   components: {
     NovoCadastroModal,
-    ListarUsuariosModal
+    ListarUsuariosModal,
+    CadastroProdutoModal
   },
   data() {
     return {
@@ -86,12 +89,18 @@ export default {
           subtopics: ['Abertos', 'Todos', 'Outros']
         },
         {
+          name: 'Estoque',
+          isOpen: false,
+          subtopics: ['Cadastrar Estoque', 'Listar Estoque']
+        },
+        {
           name: 'Logout',
           isOpen: false
         },
       ],
       showNovoCadastroModal: false,
-      showListarUsuariosModal: false
+      showListarUsuariosModal: false,
+      showCadastroProdutoModal: false
     }
   },
   computed: {
@@ -110,6 +119,8 @@ export default {
         } else if (subtopicName === 'Usuarios') {
           this.showListarUsuariosModal = true;
         }
+      } else if (topicName === 'Estoque' && subtopicName === 'Cadastrar Estoque') {
+        this.showCadastroProdutoModal = true;
       }
       // Adicione lógica para outros tópicos e sub-tópicos conforme necessário
     },
